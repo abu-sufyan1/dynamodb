@@ -1,6 +1,5 @@
 import { docClient } from '../config/aws.config.js';
 import { PutCommand, GetCommand, UpdateCommand, DeleteCommand, ScanCommand } from "@aws-sdk/lib-dynamodb";
-import { IUser } from '../models/user.model.js';
 
 export class DynamoDBService {
   static async createItem(tableName: string, item: any): Promise<void> {
@@ -8,8 +7,11 @@ export class DynamoDBService {
       TableName: tableName,
       Item: item
     });
+    console.log(process.env.AWS_ACCESS_KEY_ID);
+    console.log(process.env.AWS_SECRET_ACCESS_KEY);
+    console.log(process.env.AWS_REGION);
     await docClient.send(command);
-}
+  }
 
   static async getItem(tableName: string, key: { [key: string]: any }): Promise<any> {
     const command = new GetCommand({

@@ -4,6 +4,7 @@ import { DynamoDBService } from '../services/dynamodb.service.js';
 export class UserController {
   static async createUser(userData: IUser): Promise<IUser> {
     try {
+      console.log('Creating user:', userData);
       const user = new User(userData);
       await DynamoDBService.createItem(User.getTableName(), user.toDynamoDB().Item);
       return user;
